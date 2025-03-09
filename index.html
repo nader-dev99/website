@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة الوقت</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        h1 {
+            color: #0d6efd;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">حاسبة الوقت ⏰</h1>
+        
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="hours" class="form-label">الساعات</label>
+                        <input type="number" class="form-control" id="hours" placeholder="أدخل عدد الساعات">
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label for="minutes" class="form-label">الدقائق</label>
+                        <input type="number" class="form-control" id="minutes" placeholder="أدخل عدد الدقائق">
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-2 mt-4">
+                    <button class="btn btn-primary" onclick="calculateNewTime()">
+                        احسب الوقت الجديد
+                    </button>
+                </div>
+                
+                <div id="result" class="alert alert-success mt-4 mb-0 d-none"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function calculateNewTime() {
+            try {
+                // الحصول على القيم المدخلة
+                const hours = parseInt(document.getElementById('hours').value) || 0;
+                const minutes = parseInt(document.getElementById('minutes').value) || 0;
+
+                // الوقت الحالي
+                const currentTime = new Date();
+                
+                // إضافة الساعات والدقائق
+                currentTime.setHours(currentTime.getHours() + hours);
+                currentTime.setMinutes(currentTime.getMinutes() + minutes);
+
+                // تنسيق الوقت
+                const options = {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                
+                const formattedTime = currentTime.toLocaleTimeString('ar-EG', options);
+                
+                // عرض النتيجة
+                const resultDiv = document.getElementById('result');
+                resultDiv.classList.remove('d-none');
+                resultDiv.innerHTML = `
+                    الوقت الجديد بعد الإضافة: 
+                    <span class="fw-bold">${formattedTime}</span>
+                `;
+                
+            } catch (error) {
+                alert('حدث خطأ أثناء الحساب، يرجى التأكد من المدخلات');
+            }
+        }
+    </script>
+</body>
+
+
+
